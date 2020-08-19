@@ -1,5 +1,4 @@
-import {CsGroupAddableBloc, CsGroupAddableContextFactory, CsGroupAddableState} from './cs-group-addable-bloc';
-import {CsPageContextBloc, CsPageContextState} from '..';
+import {CsGroupAddableBloc, CsGroupAddableContextFactory, CsGroupAddableState, CsPageContextBloc, CsPageContextState} from '..';
 
 describe('CsContentContextBloc', () => {
   let csGroupAddableBloc: CsGroupAddableBloc;
