@@ -15,7 +15,6 @@ export class NotificationServiceImpl implements CsNotificationService {
   }
 
   notificationRead(uid: string, config?: CsNotificationServiceConfig): Observable<CsNotificationReadResponse> {
-    console.log('request from portal', this.apiPath, config)
     const apiRequest = new CsRequest.Builder()
       .withType(CsHttpRequestType.GET)
       .withPath(`${config ? config.apiPath : this.apiPath}/read/${uid}`)
@@ -42,8 +41,7 @@ export class NotificationServiceImpl implements CsNotificationService {
   //   );
   // }
 
-  notificationUpdate(request: any, config?: CsNotificationServiceConfig): Observable<CsNotificationUpdateResponse> {
-    console.log('request from portal notificationUpdate', this.apiPath, config)
+  notificationUpdateStatus(request: any, config?: CsNotificationServiceConfig): Observable<CsNotificationUpdateResponse> {
     const apiRequest = new CsRequest.Builder()
       .withType(CsHttpRequestType.PATCH)
       .withPath(`${config ? config.apiPath : this.apiPath}/update`)

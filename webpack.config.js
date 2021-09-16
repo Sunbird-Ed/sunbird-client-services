@@ -30,6 +30,7 @@ const config = {
         'dist/services/framework/index': './src/services/framework/index.ts',
         'dist/services/course/index': './src/services/course/index.ts',
         'dist/services/user/index': './src/services/user/index.ts',
+        'dist/services/notification/index': './src/services/notification/index',
         'dist/services/system-settings/index': './src/services/system-settings/index.ts',
         'dist/blocs/index': './src/blocs/index.ts',
         'dist/utilities/aggregator/index': './src/utilities/aggregator/index.ts',
