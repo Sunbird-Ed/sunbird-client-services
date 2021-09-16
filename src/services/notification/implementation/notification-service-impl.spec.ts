@@ -95,7 +95,7 @@ describe('DiscussionServiceImpl', () => {
                 ids: ['id1'],
             } as any;
 
-            notificationService.notificationUpdate(request).subscribe((r) => {
+            notificationService.notificationUpdateStatus(request).subscribe((r) => {
                 expect(mockHttpService.fetch).toHaveBeenCalledWith(expect.objectContaining({
                     type: 'PATCH',
                     body: {
@@ -124,7 +124,7 @@ describe('DiscussionServiceImpl', () => {
                     ids: ['id1'],
                 } as any;
 
-                notificationService.notificationUpdate(request, {apiPath: '/some_api_path'}).subscribe((r) => {
+                notificationService.notificationUpdateStatus(request, {apiPath: '/some_api_path'}).subscribe((r) => {
                     expect(mockHttpService.fetch).toHaveBeenCalledWith(expect.objectContaining({
                         type: 'PATCH',
                         path: '/some_api_path/update',
