@@ -22,14 +22,12 @@ export class NotificationServiceImpl implements CsNotificationService {
       .withBearerToken(true)
       .withUserToken(true)
       .build();
-    console.log('apiRequest: ', apiRequest)
     return this.httpService.fetch<{ result: CsNotificationReadResponse }>(apiRequest).pipe(
       map((response) => response.body.result)
     );
   }
 
   notificationDelete(request: CsNotificationDeleteReq, config?: CsNotificationServiceConfig): Observable<any> {
-    console.log('request from portal notificationDelete', this.apiPath, config)
     const apiRequest = new CsRequest.Builder()
       .withType(CsHttpRequestType.POST)
       .withPath(`${config ? config.apiPath : this.apiPath}/delete`)
@@ -37,14 +35,12 @@ export class NotificationServiceImpl implements CsNotificationService {
       .withUserToken(true)
       .withBody({ request })
       .build();
-    console.log('apiRequest: ', apiRequest)
     return this.httpService.fetch<{ result: any }>(apiRequest).pipe(
       map((response) => response.body.result)
     );
   }
 
   notificationUpdateStatus(request: CsNotificationUpdateReq, config?: CsNotificationServiceConfig): Observable<CsNotificationUpdateResponse> {
-    console.log('request from portal notificationUpdate', this.apiPath, config)
     const apiRequest = new CsRequest.Builder()
       .withType(CsHttpRequestType.PATCH)
       .withPath(`${config ? config.apiPath : this.apiPath}/update`)
@@ -52,7 +48,6 @@ export class NotificationServiceImpl implements CsNotificationService {
       .withUserToken(true)
       .withBody({ request })
       .build();
-    console.log('apiRequest: ', apiRequest)
 
     return this.httpService.fetch<{ result: CsNotificationUpdateResponse }>(apiRequest)
       .pipe(
