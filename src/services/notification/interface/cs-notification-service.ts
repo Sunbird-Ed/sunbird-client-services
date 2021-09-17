@@ -17,7 +17,8 @@ export interface CsNotificationUpdateReq {
 }
 export interface CsNotificationDeleteReq {
   ids: string[],
-  userId: string
+  userId: string,
+  category: string
 }
 
 export interface CsNotificationUpdateResponse {
