@@ -1,0 +1,63 @@
+name: PR Build
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '22.15'
+
+      - name: Check installed versions
+        run: |
+          node -v
+
+      - name: Restore node_modules cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Install dependencies
+        run: |
+          npm i 
+
+      - name: Save node_modules cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install webpack
+        run: npm install --save-dev webpack webpack-cli
+
+      - name: Build project and Pack (PR)
+        run: |
+          npm run build:prod
+          npm pack ./dist
+
+      # - name: Run lint
+      #   run: npm run lint
+
+      # - name: Run tests with coverage
+      #   run: npm run test:ci
+
+      # - name: Install SonarQube scanner
+      #   run: npm install -g sonarqube-scanner
+
+      # - name: Run SonarScanner
+      #   run: sonar-scanner
