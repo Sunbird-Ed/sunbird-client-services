@@ -37,6 +37,8 @@ const config = {
     },
     externals: [
         // externals here
+        'crypto-ld', 'jsonld', 'jsonld-signatures','security-context'
+
     ],
     output: {
         filename: '[name].js',
