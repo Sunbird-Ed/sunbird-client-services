@@ -1,9 +1,7 @@
 name: PR Build
 
 on:
-  push:
-    tags:
-      - '*'
+  pull_request:
 
 jobs:
   build-pr:
@@ -45,19 +43,19 @@ jobs:
       - name: Install webpack
         run: npm install --save-dev webpack webpack-cli
 
+      - name: Install SonarQube scanner
+        run: npm install -g sonarqube-scanner
+
+      - name: Run SonarScanner
+        run: sonar-scanner    
+
       - name: Build project and Pack (PR)
         run: |
           npm run build:prod
           npm pack ./dist
 
-      # - name: Run lint
-      #   run: npm run lint
+      - name: Run lint
+        run: npm run lint
 
-      # - name: Run tests with coverage
-      #   run: npm run test:ci
-
-      # - name: Install SonarQube scanner
-      #   run: npm install -g sonarqube-scanner
-
-      # - name: Run SonarScanner
-      #   run: sonar-scanner
+      - name: Run tests with coverage
+        run: npm run test:ci
