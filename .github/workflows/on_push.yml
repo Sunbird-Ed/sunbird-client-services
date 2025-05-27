@@ -1,0 +1,43 @@
+name: Create Tag on Push
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.15'
+          cache: 'npm'
+
+      - name: Check installed versions
+        run: |
+          node -v
+
+      - name: Clean npm cache
+        run: npm cache clean --force
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build and Pack
+        run: |
+          npm run build:prod 
+          npm pack ./dist
+
+      # - name: Publish to NPM
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   run: |
+      #     echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+      #     npm publish project-sunbird-client-services-*
+    
