@@ -2,6 +2,8 @@
 
 ## Table of Contents
 
+1. [Development](#development-setup)
+1. [Continuous Integration](#continuous-integration)
 1. [Overview](#overview)
 1. [Installation](#installation)
 1. [Getting Started](#getting-started)
@@ -9,6 +11,73 @@
    1. [Update Configuration](#update-configuration)
 1. [Services](#services)
    1. [CsGroupService](#csgroupservice)
+
+## Development setup
+
+### Prerequisites
+
+NodeJS 22.15
+
+### Local Development
+
+1. Fork the repository on GitHub
+
+2. Clone your fork:
+
+``` 
+ git clone https://github.com/your-username/sunbird-client-service.git
+
+cd sunbird-client-service
+```
+3. Install dependencies:
+
+```
+npm i
+```
+4. To run the project
+```
+npm run build
+```
+## Continuous Integration
+
+This project uses GitHub Actions for automated testing, building, and publishing. Below are details of the CI processes:
+
+### Pull Request Workflow
+
+When a pull request is opened or updated, the following automated checks are performed:
+
+1. **Code checkout**: The repository code is checked out
+2. **Environment setup**: Node.js 22.15 is installed and configured
+4. **Test execution**: All tests are run with coverage reporting
+5. **Code linting**: ESLint is run to check code style and quality
+6. **Static code analysis**: SonarQube scan is performed to evaluate code quality
+6. **Build verification**: The project is built using webpack to ensure it compiles correctly. Ensure ```SONAR_TOKEN``` is configured in your repository.
+
+This ensures that all changes in pull requests meet quality standards before merging.
+
+### Release Workflow
+
+When a new tag is pushed to the repository, the following automated steps are executed:
+
+1. **Code checkout**: The tagged version of code is checked out
+2. **Environment setup**: Node.js 22.15 is installed and configured with NPM registry access
+3. **Dependency installation**: Project dependencies are installed via `npm i`
+4. **Build process**: The project is built for production
+5. **Package creation**: The build output is packaged for distribution
+6. **NPM publication**: The package is published to the NPM registry after setting ```NPM_TOKEN```
+
+This allows for simple, reliable releases by simply pushing a new tag.
+
+### Manual Release Process
+
+To manually trigger a new release:
+
+1. Update the version in `package.json`
+2. Commit the change: `git commit -m "Increase version to x.y.z"`
+3. Create and push a tag: `git tag v{x.y.z} && git push origin v{x.y.z}`
+
+The GitHub Actions workflow will automatically build and publish the new version.
+
 
 ## Overview
 
