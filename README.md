@@ -259,3 +259,45 @@ export interface CsCourseService {
     getUserEnrollmentList(request: GetUserEnrollmentListRequests, additionalParams?: { [key: string]: string }, config?: CsCourseServiceConfig): Observable<Course[]>;
 }
 ```
+
+### Development setup
+
+### Prerequisites
+
+NodeJS 22.15
+
+### Local Development
+
+1. Fork the repository on GitHub
+
+2. Clone your fork:
+
+``` 
+git clone https://github.com/your-username/sunbird-client-service.git
+
+cd sunbird-client-service
+```
+3. Install dependencies:
+
+```
+npm i
+```
+
+### Code Quality
+
+The project maintains code quality through automated checks that run on every pull request:
+
+1. Linting
+
+    ESLint for code style and quality
+Command: npm run lint
+
+2. Dependencies
+
+    Uses npm ci for deterministic installations
+GitHub Actions cache for faster builds
+
+3. Code Formatting
+
+    Ensures consistent code formatting
+Can be automatically fixed using npm run lint:fix
