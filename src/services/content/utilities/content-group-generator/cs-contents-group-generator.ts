@@ -134,9 +134,9 @@ export class CsContentsGroupGenerator {
             contents
                 .reduce<Map<string, Content[]>>((acc, content) => {
                     let _groupBy: keyof Content = groupBy;
-                    const searchableKey = `se_${groupBy}s` as keyof Content;
-                    if (includeSearchable && content[searchableKey]) {
-                        _groupBy = searchableKey;
+                    const searchableKey = `se_${groupBy}s`;
+                    if (includeSearchable && searchableKey in content && content[searchableKey]) {
+                        _groupBy = searchableKey as keyof Content;
                     }
                     if (CsContentsGroupGenerator.isMultiValueAttribute(content, _groupBy)) {
                         content[_groupBy].forEach((value) => {
