@@ -70,7 +70,7 @@ export class CsContentsGroupGenerator {
                     continue;
                 }
 
-                for (const value of combination[attribute]) {
+                for (const value of combination[attribute as keyof typeof combination] || []) {
                     if (resultingCombination![attribute]) {
                         continue;
                     }
@@ -95,13 +95,15 @@ export class CsContentsGroupGenerator {
                 return Object.keys(sourceFramework)
                     .filter((category) => categories ? categories.indexOf(category as any) > -1 : true)
                     .some((category) => {
-                        if (!sourceFramework[category].length) { return false; }
+                        if (!sourceFramework[category] || !sourceFramework[category]!.length) { return false; }
 
                         const userPreferencesCategoryValues: string[] = (() => {
+                            const value = sourceFramework[category];
+                            if (!value) return [];
                             if (CsContentsGroupGenerator.isMultiValueAttribute(sourceFramework, category)) {
-                                return sourceFramework[category];
+                                return value as string[];
                             }
-                            return [sourceFramework[category]];
+                            return [value as string];
                         })();
 
                         const contentCategoryValues: string[] = (() => {
@@ -131,9 +133,10 @@ export class CsContentsGroupGenerator {
         let sections = Array.from(
             contents
                 .reduce<Map<string, Content[]>>((acc, content) => {
-                    let _groupBy: string = groupBy;
-                    if (includeSearchable && content['se_' + groupBy + 's']) {
-                        _groupBy = 'se_' + groupBy + 's';
+                    let _groupBy: keyof Content = groupBy;
+                    const searchableKey = `se_${groupBy}s`;
+                    if (includeSearchable && searchableKey in content && content[searchableKey]) {
+                        _groupBy = searchableKey as keyof Content;
                     }
                     if (CsContentsGroupGenerator.isMultiValueAttribute(content, _groupBy)) {
                         content[_groupBy].forEach((value) => {
@@ -142,9 +145,10 @@ export class CsContentsGroupGenerator {
                             acc.set(value, c);
                         });
                     } else {
-                        const c = acc.get(content[_groupBy] || 'Other') || [];
+                        const groupValue = String(content[_groupBy] || 'Other');
+                        const c = acc.get(groupValue) || [];
                         c.push(content);
-                        acc.set(content[_groupBy] || 'Other', c);
+                        acc.set(groupValue, c);
                     }
 
                     return acc;
@@ -183,7 +187,7 @@ export class CsContentsGroupGenerator {
         }
 
         return {
-            name: groupBy,
+            name: groupBy as string,
             sections,
             combination: resultingCombination
         };

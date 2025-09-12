@@ -5,10 +5,7 @@ import {CsCourseServiceConfig} from '../../../index';
 export interface GetUserEnrolledCoursesRequest {
     userId: string;
     filters?: {
-        board?: string[];
-        medium?: string[];
-        gradeLevel?: string[];
-        subject?: string[];
+        [key: string]: any;
     };
 }
 
