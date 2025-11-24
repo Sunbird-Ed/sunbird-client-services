@@ -22,7 +22,7 @@
     "global": "^4.4.0",
     "inversify": "5.1.1",
     "jsonld": "8.3.2",
-    "jsonld-signatures": "11.2.1",
+    "jsonld-signatures": "7.0.0",
     "jszip": "3.10.1",
     "node-fetch": "2.7.0",
     "path-browserify": "^1.0.1",
