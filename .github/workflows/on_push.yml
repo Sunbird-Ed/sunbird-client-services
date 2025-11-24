@@ -22,25 +22,9 @@ jobs:
         run: |
           node -v
 
-      - name: Restore node_modules cache
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
-
       - name: Install dependencies
         run: |
-          npm i 
-
-      - name: Save node_modules cache
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          npm ci
 
       - name: Install webpack
         run: npm install --save-dev webpack webpack-cli
