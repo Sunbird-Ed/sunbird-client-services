@@ -1,5 +1,6 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 
 const config = {
     entry: {
@@ -36,7 +37,7 @@ const config = {
         'dist/telemetry/index': './src/telemetry/index.ts',
     },
     externals: [
-        // externals here
+        'crypto-ld', 'jsonld'
     ],
     output: {
         filename: '[name].js',
@@ -50,6 +51,16 @@ const config = {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules\/(?!jsonld-signatures)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
             }
         ]
     },
@@ -66,11 +77,18 @@ const config = {
                     }
                 }
             })
-        ],
+        ]
     },
     performance: {
         hints: false
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            process: require.resolve('process/browser'),
+            Buffer: ['buffer', 'Buffer'],
+            global: require.resolve('global')
+        })
+    ]
 };
 
 module.exports = (env, argv) => {

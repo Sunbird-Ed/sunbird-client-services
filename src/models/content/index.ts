@@ -1,4 +1,4 @@
-export interface Content {
+export interface ContentBase {
     identifier: string;
     name: string;
     appIcon: string;
@@ -8,9 +8,6 @@ export interface Content {
     size: string;
     owner: string;
     creator: string;
-    subject: string | string[];
-    board: string;
-    medium: string | string[];
     publisher: string;
     me_totalRatingsCount: number;
     me_averageRating: string;
@@ -24,7 +21,6 @@ export interface Content {
     variants: { [key: string]: any };
     artifactUrl: string;
     language: string[];
-    gradeLevel: string[];
     osId: string;
     contentType: string;
     resourceType: string;
@@ -65,12 +61,13 @@ export interface Content {
     userConsent?: UserConsent;
     additionalCategories?: string[];
     forumId?: string;
-    se_boards?: string;
-    se_mediums?: string | string[];
-    se_gradeLevels?: string[];
-    se_subjects?: string | string[];
     transcripts?: Transcript[];
 }
+
+export interface Content extends ContentBase {
+    [key: string]: any;
+}
+
 export interface Transcript {
     artifactUrl: string;
     identifier: string;
