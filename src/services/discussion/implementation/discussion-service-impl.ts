@@ -90,7 +90,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
 
     votePost(pid: number, data, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
-            .withType(CsHttpRequestType.POST)
+            .withType(CsHttpRequestType.PUT)
             .withPath(`${config ? config.apiPath : this.apiPath}/v3/posts/${pid}/vote`)
             .withBearerToken(true)
             .withUserToken(true)
@@ -117,7 +117,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
 
     bookmarkPost(pid: number, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
-            .withType(CsHttpRequestType.POST)
+            .withType(CsHttpRequestType.PUT)
             .withPath(`${config ? config.apiPath : this.apiPath}/v3/posts/${pid}/bookmark`)
             .withBearerToken(true)
             .withUserToken(true)
