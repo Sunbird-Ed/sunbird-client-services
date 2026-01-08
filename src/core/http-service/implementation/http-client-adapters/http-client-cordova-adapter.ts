@@ -47,6 +47,10 @@ export class HttpClientCordovaAdapter implements HttpClient {
         return this.invokeRequest(CsHttpRequestType.PATCH, baseUrl + path, body, headers, httpSerializer);
     }
 
+    put(baseUrl: string, path: string, headers: any, body: {}, httpSerializer: CsHttpSerializer): Observable<CsResponse> {
+        return this.invokeRequest(CsHttpRequestType.PUT, baseUrl + path, body, headers, httpSerializer);
+    }
+
     post(baseUrl: string, path: string, headers: any, body: {}, httpSerializer: CsHttpSerializer): Observable<CsResponse> {
         return this.invokeRequest(CsHttpRequestType.POST, baseUrl + path, body, headers, httpSerializer);
     }
@@ -63,7 +67,8 @@ export class HttpClientCordovaAdapter implements HttpClient {
 
         if (
           type === CsHttpRequestType.POST ||
-          type === CsHttpRequestType.PATCH
+          type === CsHttpRequestType.PATCH ||
+          type === CsHttpRequestType.PUT
         ) {
             requestOptions['data']  = parametersOrData;
         } else if (

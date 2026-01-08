@@ -38,7 +38,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
     createPost(data: any, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
             .withType(CsHttpRequestType.POST)
-            .withPath(`${config ? config.apiPath : this.apiPath}/v2/topics`)
+            .withPath(`${config ? config.apiPath : this.apiPath}/v3/topics`)
             .withBearerToken(true)
             .withUserToken(true)
             .withBody(data)
@@ -90,8 +90,8 @@ export class DiscussionServiceImpl implements CsDiscussionService {
 
     votePost(pid: number, data, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
-            .withType(CsHttpRequestType.POST)
-            .withPath(`${config ? config.apiPath : this.apiPath}/v2/posts/${pid}/vote`)
+            .withType(CsHttpRequestType.PUT)
+            .withPath(`${config ? config.apiPath : this.apiPath}/v3/posts/${pid}/vote`)
             .withBearerToken(true)
             .withUserToken(true)
             .withBody(data)
@@ -105,7 +105,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
     deleteVotePost(pid: number, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
             .withType(CsHttpRequestType.DELETE)
-            .withPath(`${config ? config.apiPath : this.apiPath}/v2/posts/${pid}/vote`)
+            .withPath(`${config ? config.apiPath : this.apiPath}/v3/posts/${pid}/vote`)
             .withBearerToken(true)
             .withUserToken(true)
             .build();
@@ -117,8 +117,8 @@ export class DiscussionServiceImpl implements CsDiscussionService {
 
     bookmarkPost(pid: number, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
-            .withType(CsHttpRequestType.POST)
-            .withPath(`${config ? config.apiPath : this.apiPath}/v2/posts/${pid}/bookmark`)
+            .withType(CsHttpRequestType.PUT)
+            .withPath(`${config ? config.apiPath : this.apiPath}/v3/posts/${pid}/bookmark`)
             .withBearerToken(true)
             .withUserToken(true)
             .build();
@@ -131,7 +131,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
     deleteBookmarkPost(pid: number, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
             .withType(CsHttpRequestType.DELETE)
-            .withPath(`${config ? config.apiPath : this.apiPath}/v2/posts/${pid}/bookmark`)
+            .withPath(`${config ? config.apiPath : this.apiPath}/v3/posts/${pid}/bookmark`)
             .withBearerToken(true)
             .withUserToken(true)
             .build();
@@ -144,7 +144,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
     replyPost(tid: number, data: any, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
             .withType(CsHttpRequestType.POST)
-            .withPath(`${config ? config.apiPath : this.apiPath}/v2/topics/${tid}`)
+            .withPath(`${config ? config.apiPath : this.apiPath}/v3/topics/${tid}`)
             .withBearerToken(true)
             .withUserToken(true)
             .withBody(data)
@@ -385,7 +385,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
     editPost(pid: number, data, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
             .withType(CsHttpRequestType.POST)
-            .withPath(`${config ? config.apiPath : this.apiPath}/v2/posts/${pid}`)
+            .withPath(`${config ? config.apiPath : this.apiPath}/v3/posts/${pid}`)
             .withBearerToken(true)
             .withUserToken(true)
             .withBody(data)
@@ -398,7 +398,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
     deletePost(pid: number, uid: number, config?) {
         const apiRequest: CsRequest = new CsRequest.Builder()
             .withType(CsHttpRequestType.DELETE)
-            .withPath(`${config ? config.apiPath : this.apiPath}/v2/posts/${pid}?uid=${uid}`)
+            .withPath(`${config ? config.apiPath : this.apiPath}/v3/posts/${pid}?uid=${uid}`)
             .withBearerToken(true)
             .withUserToken(true)
             .build();
@@ -460,7 +460,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
     deleteTopic(tid: number, config?: CsDiscussionServiceConfig): Observable<any> {
         const apiRequest: CsRequest = new CsRequest.Builder()
         .withType(CsHttpRequestType.DELETE)
-        .withPath(`${config ? config.apiPath : this.apiPath}/v2/topics/${tid}`)
+        .withPath(`${config ? config.apiPath : this.apiPath}/v3/topics/${tid}`)
         .withBearerToken(true)
         .withUserToken(true)
         .build();
@@ -473,7 +473,7 @@ export class DiscussionServiceImpl implements CsDiscussionService {
     editTopic(tid: number, data: any, config?: CsDiscussionServiceConfig): Observable<CsAttachForumResponse> {
         const apiRequest: CsRequest = new CsRequest.Builder()
         .withType(CsHttpRequestType.POST)
-        .withPath(`${config ? config.apiPath : this.apiPath}/v2/topics/${tid}`)
+        .withPath(`${config ? config.apiPath : this.apiPath}/v3/topics/${tid}`)
         .withBearerToken(true)
         .withUserToken(true)
         .withBody(data)
@@ -595,6 +595,19 @@ export class DiscussionServiceImpl implements CsDiscussionService {
         const apiRequest: CsRequest = new CsRequest.Builder()
             .withType(CsHttpRequestType.GET)
             .withPath(`${config ? config.apiPath : this.apiPath}/tags/${tag}`)
+            .withBearerToken(true)
+            .withUserToken(true)
+            .build();
+
+        return this.httpService.fetch<{ result: {} }>(apiRequest).pipe(
+            map((r) => r.body)
+        );
+    }
+
+    initializeUserDetails(config?: CsDiscussionServiceConfig): Observable<any> {
+        const apiRequest: CsRequest = new CsRequest.Builder()
+            .withType(CsHttpRequestType.GET)
+            .withPath(`${config ? config.apiPath : this.apiPath}/users/me`)
             .withBearerToken(true)
             .withUserToken(true)
             .build();

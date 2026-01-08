@@ -114,6 +114,11 @@ export class HttpServiceImpl implements CsHttpService {
                             request.host || this.host, request.path, request.headers, request.body, request.serializer
                         ).toPromise();
                         break;
+                    case CsHttpRequestType.PUT:
+                        localResponse = await this.http.put(
+                            request.host || this.host, request.path, request.headers, request.body, request.serializer
+                        ).toPromise();
+                        break;
                     case CsHttpRequestType.POST: {
                         localResponse = await this.http.post(
                             request.host || this.host, request.path, request.headers, request.body, request.serializer

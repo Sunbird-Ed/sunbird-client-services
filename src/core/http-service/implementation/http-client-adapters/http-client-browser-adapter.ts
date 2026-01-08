@@ -111,6 +111,20 @@ export class HttpClientBrowserAdapter implements HttpClient {
         return this.invokeRequest(CsHttpRequestType.PATCH, url, headers, body);
     }
 
+    put(baseUrl: string, path: string, headers: any, body: any, httpSerializer: CsHttpSerializer): Observable<CsResponse> {
+        const url = new URL(baseUrl + path);
+
+        if (httpSerializer === CsHttpSerializer.URLENCODED && typeof body === 'object') {
+            this.addHeader('content-type', 'application/x-www-form-urlencoded');
+            body = qs.stringify(body);
+        } else if (typeof body === 'object') {
+            delete this.headers['content-type'];
+            body = JSON.stringify(body);
+        }
+
+        return this.invokeRequest(CsHttpRequestType.PUT, url, headers, body);
+    }
+
     post(baseUrl: string, path: string, headers: any, body: any, httpSerializer: CsHttpSerializer): Observable<CsResponse> {
         const url = new URL(baseUrl + path);
 

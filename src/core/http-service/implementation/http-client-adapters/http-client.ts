@@ -15,5 +15,7 @@ export abstract class HttpClient {
 
     abstract patch(baseUrl: string, path: string, headers: any, body: any, httpSerializer: CsHttpSerializer): Observable<CsResponse>;
 
+    abstract put(baseUrl: string, path: string, headers: any, body: any, httpSerializer: CsHttpSerializer): Observable<CsResponse>;
+
     abstract delete(baseUrl: string, path: string, headers: any, parameters: any, httpSerializer: CsHttpSerializer): Observable<CsResponse>;
 }
